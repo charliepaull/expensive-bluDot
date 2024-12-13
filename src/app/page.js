@@ -5,16 +5,9 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { BarChart, LineChart } from "@/components/ui/chart"
+import Link from 'next/link';
 import { MapPin, TrendingUp, Home, DollarSign } from 'lucide-react'
-
-const trendData = [
-  { name: "Jan", price: 300000, listings: 150 },
-  { name: "Feb", price: 310000, listings: 160 },
-  { name: "Mar", price: 305000, listings: 155 },
-  { name: "Apr", price: 320000, listings: 170 },
-  { name: "May", price: 330000, listings: 180 },
-  { name: "Jun", price: 340000, listings: 190 },
-]
+import Trends from './pages/trends'
 
 const hotProperties = [
   { id: 1, address: "123 Main St", price: 500000, image: "/placeholder.svg?height=200&width=300" },
@@ -120,7 +113,9 @@ export default function ExpensiveBluDot() {
           <div className="flex justify-between items-center">
             <h1 className="text-3xl font-bold text-white">Expensive BluDot</h1>
             <div className="space-x-4">
-              <Button variant="ghost" className="text-white hover:bg-blue-700">Trends</Button>
+              <Link href="/trends">
+                <Button variant="ghost" className="text-white hover:bg-blue-700">Trends</Button>
+              </Link>
               <Button variant="ghost" className="text-white hover:bg-blue-700">Neighborhoods</Button>
               <Button variant="ghost" className="text-white hover:bg-blue-700">Hot Properties</Button>
             </div>
@@ -135,54 +130,9 @@ export default function ExpensiveBluDot() {
             <TabsTrigger value="neighborhoods" className="data-[state=active]:bg-blue-500 data-[state=active]:text-white">Neighborhoods</TabsTrigger>
             <TabsTrigger value="properties" className="data-[state=active]:bg-blue-500 data-[state=active]:text-white">Hot Properties</TabsTrigger>
           </TabsList>
-          <TabsContent value="trends" className="space-y-8">
-            <Card className="bg-gradient-to-br from-blue-100 to-blue-200 shadow-lg">
-              <CardHeader>
-                <CardTitle className="text-blue-800">Average Home Prices</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <LineChart
-                  data={trendData}
-                  config={{
-                    price: {
-                      label: "Price",
-                      color: "hsl(217, 91%, 60%)", // Bright blue
-                    },
-                  }}
-                  className="h-[300px]"
-                />
-              </CardContent>
-            </Card>
-            <Card className="bg-gradient-to-br from-blue-100 to-blue-200 shadow-lg">
-              <CardHeader>
-                <CardTitle className="text-blue-800">Number of Listings</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <BarChart
-                  data={trendData}
-                  config={{
-                    listings: {
-                      label: "Listings",
-                      color: "hsl(201, 96%, 32%)", // Deep blue
-                    },
-                  }}
-                  className="h-[300px]"
-                />
-              </CardContent>
-            </Card>
-            {scrapedData && (
-              <Card className="bg-gradient-to-br from-blue-100 to-blue-200 shadow-lg">
-                <CardHeader>
-                  <CardTitle className="text-blue-800">Latest Market Insights</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-blue-700">{scrapedData.latestInsight}</p>
-                </CardContent>
-              </Card>
-            )}
-          </TabsContent>
           <TabsContent value="neighborhoods" className="space-y-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <Trends />
               <Card className="md:col-span-2 bg-gradient-to-br from-blue-100 to-blue-200 shadow-lg">
                 <CardHeader>
                   <CardTitle className="text-blue-800">Neighborhood Map</CardTitle>
